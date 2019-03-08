@@ -11,12 +11,10 @@ class Index(View):
 
     def get(self, request):
         data = {}
-        try:
-            query = LogIP.objects.last()
+        query = LogIP.objects.last()
+        if query:
             data['ip'] = query.ip
             data['created_at'] = query.created_at
-        except LogIP.DoesNotExist:
-            pass
         return JsonResponse(data)
 
 
