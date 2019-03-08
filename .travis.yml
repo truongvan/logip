@@ -7,7 +7,6 @@ install:
   - pip3 install -r requirements.txt
 before_script:
   - python3 src/manage.py migrate
-  - python3 src/manage.py collectstatic --noinput
 script:
   - python3 src/manage.py test
 
