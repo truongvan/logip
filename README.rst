@@ -1,0 +1,1 @@
+{<img src="https://travis-ci.org/truongvan/logip.svg?branch=master" alt="Build Status" />}[https://travis-ci.org/truongvan/logip]
