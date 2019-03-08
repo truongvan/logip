@@ -10,18 +10,24 @@ from .models import LogIP
 class Index(View):
 
     def get(self, request):
-        data = {'ip': None}
-        ip_in_params = request.GET.get('ip', '')
-        if ip_in_params:
+        data = {}
+        try:
+            query = LogIP.objects.last()
+            data['ip'] = query.ip
+            data['created_at'] = query.created_at
+        except LogIP.DoesNotExist:
+            pass
+        return JsonResponse(data)
+
+
+class UpdateIp(View):
+    def get(self, request):
+        new_ip = request.META['REMOTE_ADDR']
+        if new_ip:
+            data = {'ip': new_ip}
             try:
-                LogIP.objects.create(ip=ip_in_params)
-                return JsonResponse({'ok': True})
+                LogIP.objects.create(ip=new_ip)
+                data['ok'] = True
             except TypeError:
-                return JsonResponse({'ok': False})
-        else:
-            try:
-                query = LogIP.objects.last()
-                data['ip'] = query.ip
-            except LogIP.DoesNotExist:
-                return JsonResponse(data)
+                data['ok'] = False
             return JsonResponse(data)
