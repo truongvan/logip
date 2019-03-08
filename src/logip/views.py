@@ -20,7 +20,9 @@ class Index(View):
 
 class UpdateIp(View):
     def get(self, request):
-        new_ip = request.META['REMOTE_ADDR']
+        new_ip = request.GET.get('ip')
+        if not new_ip:
+            new_ip = request.META['REMOTE_ADDR']
         if new_ip:
             data = {'ip': new_ip}
             try:

@@ -12,7 +12,7 @@ class NoDataTestCase(TestCase):
         self.assertEqual(response.status_code, 200)
 
 
-class UpdateRecordTestCase(TestCase):
+class UpdateRemoteTestCase(TestCase):
     def setUp(self):
         self.client = Client()
 
@@ -24,3 +24,17 @@ class UpdateRecordTestCase(TestCase):
         response = self.client.get('/')
         response_dict = json.loads(response)
         self.assertEqual(response_dict.ip, '127.0.0.1')
+
+
+class UpdateCustomTestCase(TestCase):
+    def setUp(self):
+        self.client = Client()
+
+    def update_record(self):
+        response = self.client.get('/update/?ip=1.1.1.1')
+        self.assertEqual(response.status_code, 200)
+
+    def view_record(self):
+        response = self.client.get('/')
+        response_dict = json.loads(response)
+        self.assertEqual(response_dict.ip, '1.1.1.1')
