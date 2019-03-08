@@ -1,1 +1,2 @@
-{<img src="https://travis-ci.org/truongvan/logip.svg?branch=master" alt="Build Status" />}[https://travis-ci.org/truongvan/logip]
+.. image:: https://travis-ci.org/truongvan/logip.svg?branch=master
+    :target: https://travis-ci.org/truongvan/logip
