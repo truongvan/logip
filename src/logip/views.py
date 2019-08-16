@@ -16,7 +16,7 @@ class Index(View):
         access_id = request.GET.get('access_id')
         if check_access_id(access_id):
             data = {}
-            today_utc = datetime.datetime.today().replace(tzinfo=pytz.timezone('UTC'))
+            today_utc = datetime.datetime.today().replace(tzinfo=pytz.timezone('UTC')) - datetime.timedelta(days=1)
             query = LogIP.objects.filter(created_at__gte=today_utc)
             if query:
                 data['ip'] = query.ip
