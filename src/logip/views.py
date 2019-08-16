@@ -19,8 +19,11 @@ class Index(View):
             today_utc = datetime.datetime.today().replace(tzinfo=pytz.timezone('UTC')) - datetime.timedelta(days=1)
             query = LogIP.objects.filter(created_at__gte=today_utc)
             if query:
-                data['ip'] = query.ip
-                data['created_at'] = query.created_at
+                for item in query:
+                    data[item.machine] = {
+                        'ip': item.ip,
+                        'created_at': item.created_at
+                    }
             return JsonResponse(data)
         return HttpResponseForbidden()
 
