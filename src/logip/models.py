@@ -8,19 +8,21 @@ from .tools import token_generator
 
 
 class LogIPManager(models.Manager):
-    def custom_create(self, ip):
+    def custom_create(self, ip, machine=""):
         log_ip = self.last()
         save_ip = ''
         if log_ip:
             save_ip = log_ip.ip
         if save_ip != ip:
-            return self.create(ip=ip)
+            return self.create(ip=ip, machine=machine)
         return log_ip
 
 
 class LogIP(models.Model):
     ip = models.GenericIPAddressField()
+    machine = models.CharField(max_length=50, default="")
     created_at = models.DateTimeField(auto_now_add=True)
+    
     objects = LogIPManager()
 
 
