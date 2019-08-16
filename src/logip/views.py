@@ -34,13 +34,17 @@ class UpdateIp(View):
         access_id = request.GET.get('access_id')
         token = request.GET.get('access_token')
         machine = request.GET.get('machine', "")
+        check_duplication = request.GET.get('check')
         if check_token(access_id, token):
             if not new_ip:
                 new_ip = get_client_ip(request)
             if new_ip:
                 data = {'ip': new_ip, 'machine': machine}
                 try:
-                    LogIP.objects.custom_create(ip=new_ip, machine=machine)
+                    if check_duplication == 'yes':
+                        LogIP.objects.custom_create(ip=new_ip, machine=machine)
+                     else:
+                        LogIP.objects.create(ip=new_ip, machine=machine)
                     data['ok'] = True
                 except TypeError:
                     data['ok'] = False
