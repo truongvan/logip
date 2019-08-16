@@ -8,8 +8,8 @@ class Command(BaseCommand):
     help = 'Create new user, create new accesstoken'
 
     def handle(self, *args, **options):
-        user = User.objects.get_or_create(username='logip')
-        access_token = AccessToken.objects.get_or_create(user=user)
+        user, _ = User.objects.get_or_create(username='logip')
+        access_token, _ = AccessToken.objects.get_or_create(user=user)
         access_id = str(access_token.pk)
         token = access_token.gen_token()
         print("Access ID: {}".format(access_id))
