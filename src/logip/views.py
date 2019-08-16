@@ -43,7 +43,7 @@ class UpdateIp(View):
                 try:
                     if check_duplication == 'yes':
                         LogIP.objects.custom_create(ip=new_ip, machine=machine)
-                     else:
+                    else:
                         LogIP.objects.create(ip=new_ip, machine=machine)
                     data['ok'] = True
                 except TypeError:
